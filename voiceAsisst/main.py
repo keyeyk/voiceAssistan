@@ -88,8 +88,9 @@ def response(voice):
             request = requests.get(url)
             html_ic = request.content
             soup = BeautifulSoup(html_ic, "html.parser")
-            gunduz = soup.find_all("div",{"class":"hava-durumu--detail-data-item-bottom-temp-max"})
-            gece = soup.find_all("div",{"class":"hava-durumu--detail-data-item-bottom-temp-min"})
+
+            gunduz = soup.find_all("p",{"class":"hava-durumu--detail-data-item-bottom-temp-max"})
+            gece = soup.find_all("p",{"class":"hava-durumu--detail-data-item-bottom-temp-min"})
             hav_dur = soup.find_all("div",{"class":"container hava-durumu--detail-data-item-bottom-desc"})
             
             gunduz_arr = []
@@ -108,7 +109,10 @@ def response(voice):
                 k = k.text
                 hav_dur_arr.append(k)
             
-            birles = "{} için yarınki hava durumu şöyle {} gündüz sıcaklığı {} gece sıcaklığı {}".format(search,hav_dur_arr[0], gece_arr[0], gece_arr[0])
+            #print(gunduz_arr[0])
+            
+            birles = "{} için yarın hava durumu şöyle {} gündüz sıcaklığı {} gece sıcaklığı {}".format(search, hav_dur_arr[0], gunduz_arr[0], gece_arr[0])
+            # = search + "için yarın hava durumu şöyle" + hav_dur_arr[0] + "gündüz sıcaklığı" + gunduz_arr[0] + "gece sıcaklığı" + gece_arr[0]
             speak(birles)
 
 def speak(string):
